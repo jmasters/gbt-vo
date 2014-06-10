@@ -1,0 +1,25 @@
+$def with (result)
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.2" xmlns="http://www.ivoa.net/xml/VOTable/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ivoa.net/xml/VOTable/v1.2">
+ <RESOURCE type="results">
+  <TABLE>
+   <FIELD ID="target" arraysize="*" datatype="char" name="target"/>
+   <FIELD ID="restfreq_ghz" arraysize="1" datatype="double" name="restfreq_ghz"/>
+   <FIELD ID="ra" arraysize="1" datatype="double" name="ra"/>
+   <FIELD ID="dec" arraysize="1" datatype="double" name="dec"/>
+   <FIELD ID="filename" arraysize="*" datatype="char" name="filename"/>
+   <DATA>
+    <TABLEDATA>
+      $for source in result
+      <TR>
+        <TD>$source.target</TD>
+        <TD>$source.restfreq_ghz</TD>
+        <TD>$source.ra</TD>
+        <TD>$source.dec</TD>
+        <TD>$source.filename</TD>
+      </TR>
+    </TABLEDATA>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+</VOTABLE>
