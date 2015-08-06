@@ -1,0 +1,95 @@
+$def with (result, status, params)
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.2" xmlns="http://www.ivoa.net/xml/VOTable/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ivoa.net/xml/VOTable/v1.2">
+ <RESOURCE type="results">
+   <DESCRIPTION>Green Bank Telescope Spectral Archive</DESCRIPTION>
+   <INFO name="QUERY_STATUS" value="$status"/>
+   <INFO name="SERVICE_PROTOCOL" value="1.04">SSAP</INFO>
+   <INFO name="REQUEST" value="queryData"/>
+
+   $for param in params.keys():
+       <INFO name="$param.upper()" value="$params[param]"/>
+
+   $ rlen = len(result)
+
+   <INFO name="TableLength" value="$rlen"/>
+
+   $if status=="OK":
+       <TABLE>
+
+	 <PARAM ID="voclass" name="voclass" ucd="meta.note" utype="ssa:dataset.datamodel" datatype="char" arraysize="*" value="Spectrum-1.0">
+	   <DESCRIPTION>VO Data model name and version</DESCRIPTION>
+	 </PARAM>
+	 <PARAM ID="vopub" name="vopub" datatype="char" arraysize="*" ucd="meta.id" utype="ssa:curation.publisher" value="NRAO">
+	   <DESCRIPTION>VO Publisher</DESCRIPTION>
+	 </PARAM>
+	 <FIELD ID="target" ucd="meta.id" arraysize="*" datatype="char" name="target">
+	   <DESCRIPTION>Target name</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="restfreq_ghz" ucd="em.radio.12-30GHz" arraysize="1"
+		datatype="double" name="restfreq_ghz">
+	   <DESCRIPTION>Rest frequency in gigahertz</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="time"  ucd="time.creation" arraysize="*" datatype="char" name="timestamp">
+	   <DESCRIPTION>Time of observation (UT)</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="ra" ucd="pos.eq.ra" arraysize="1" datatype="double" name="ra">
+	   <DESCRIPTION>Right Ascension in decimal degrees (J2000)</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="dec"  ucd="pos.eq.dec" arraysize="1" datatype="double" name="dec">
+	   <DESCRIPTION>Declination in decimal degrees (J2000)</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="datalen" datatype="long" ucd="meta.number" utype="ssa:dataset.length">
+	   <DESCRIPTION>Number of data points</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="title" datatype="char" ucd="meta.title;meta.dataset" utype="ssa:dataid.title" arraysize="*">
+	   <DESCRIPTION>data set name and target name</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="url" ucd="meta.ref.url" utype="ssa:access.reference" arraysize="*" datatype="char" name="url">
+	   <DESCRIPTION>FITS file with spectra in binary table format</DESCRIPTION>
+	 </FIELD>
+	 <FIELD ID="format" ucd="meta.code.mime" utype="ssa:access.format" arraysize="*" datatype="char" name="format">
+	   <DESCRIPTION>Mime type of file</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="coord_obs" datatype="double" ucd="pos.eq" utype="ssa:char.spatialaxis.coverage.location.value" unit="deg" arraysize="2">
+	   <DESCRIPTION>RA and Dec of observation</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="spec_bw" datatype="double" ucd="instr.bandwidth" utype="ssa:char.spectralaxis.coverage.bounds.extent" unit="megahertz">
+	   <DESCRIPTION>Bandwith of the first spectral window</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="tmid" datatype="double" ucd="time.epoch" utype="ssa:char.timeaxis.coverage.location.value" unit="d">
+	   <DESCRIPTION>Midpoint of exposure in MJD</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="spec_val" datatype="double" ucd="em.wl;instr.bandpass" utype="ssa:char.spectralaxis.coverage.location.value" unit="gigahertz">
+	   <DESCRIPTION>Rest frequency in GHz</DESCRIPTION>
+	 </FIELD>
+	 <FIELD name="s_fov" datatype="double" ucd="instr.fov" utype="ssa:char.spatialaxis.coverage.bounds.extent" unit="deg">
+	   <DESCRIPTION>
+	     Approximate size of region in degrees at the rest frequency, assuming a 65% aperture efficiency at K-band
+	   </DESCRIPTION>
+	 </FIELD>
+	 <DATA>
+	   <TABLEDATA>
+	     $for source in result
+	     <TR>
+	       <TD>$source.target</TD>
+	       <TD>$source.restfreq_ghz</TD>
+	       <TD>$source.timestamp</TD>
+	       <TD>$source.ra</TD>
+	       <TD>$source.dec</TD>
+	       <TD>$source.nchan</TD>
+	       <TD>GBT Megamaser Spectra, Braatz et. al. - $source.target</TD>
+	       <TD>$source.filename</TD>
+	       <TD>FITS</TD>
+	       <TD>$source.ra $source.dec</TD>
+	       <TD>$source.bandwidth</TD>
+	       <TD>$source.mjd</TD>
+	       <TD>$source.restfreq_ghz</TD>
+	       <TD>$source.beamsize</TD>
+	     </TR>
+	   </TABLEDATA>
+	 </DATA>
+       </TABLE>
+
+ </RESOURCE>
+</VOTABLE>

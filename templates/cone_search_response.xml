@@ -1,0 +1,32 @@
+$def with (result, status)
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.2" xmlns="http://www.ivoa.net/xml/VOTable/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ivoa.net/xml/VOTable/v1.2">
+
+      <RESOURCE type="results">
+	<TABLE>
+	  $if status.value!="OK":
+	      <PARAM name="Error">$status.description</PARAM>
+	  $else:
+	      <FIELD ID="target" arraysize="*" datatype="char" name="target"/>
+	      <FIELD ID="restfreq_ghz" arraysize="1" datatype="double" name="restfreq_ghz"/>
+	      <FIELD ID="timestamp" arraysize="*" datatype="char" name="timestamp"/>
+	      <FIELD ID="ra" arraysize="1" datatype="double" name="ra" ucd="POS_EQ_RA_MAIN"/>
+	      <FIELD ID="dec" arraysize="1" datatype="double" name="dec" ucd="POS_EQ_DEC_MAIN"/>
+	      <FIELD ID="filename" arraysize="*" datatype="char" name="filename" ucd="ID_MAIN"/>
+	      <DATA>
+		<TABLEDATA>
+		  $for source in result
+		  <TR>
+		    <TD>$source.target</TD>
+		    <TD>$source.restfreq_ghz</TD>
+		    <TD>$source.timestamp</TD>
+		    <TD>$source.ra</TD>
+		    <TD>$source.dec</TD>
+		    <TD>$source.filename</TD>
+		  </TR>
+		</TABLEDATA>
+	      </DATA>
+	</TABLE>
+      </RESOURCE>
+
+</VOTABLE>

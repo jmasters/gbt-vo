@@ -5,6 +5,7 @@ $def with (result)
   <TABLE>
    <FIELD ID="target" arraysize="*" datatype="char" name="target"/>
    <FIELD ID="restfreq_ghz" arraysize="1" datatype="double" name="restfreq_ghz"/>
+   <FIELD ID="timestamp" arraysize="*" datatype="char" name="timestamp"/>
    <FIELD ID="ra" arraysize="1" datatype="double" name="ra"/>
    <FIELD ID="dec" arraysize="1" datatype="double" name="dec"/>
    <FIELD ID="filename" arraysize="*" datatype="char" name="filename"/>
@@ -14,6 +15,7 @@ $def with (result)
       <TR>
         <TD>$source.target</TD>
         <TD>$source.restfreq_ghz</TD>
+        <TD>$source.timestamp</TD>
         <TD>$source.ra</TD>
         <TD>$source.dec</TD>
         <TD>$source.filename</TD>
